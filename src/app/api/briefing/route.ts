@@ -26,15 +26,16 @@ export async function GET() {
   // Convert Celsius to Fahrenheit
   const cToF = (c: number) => Math.round((c * 9/5) + 32);
 
+  const tempF = cToF(current.temperature);
+  const tempHighF = cToF(daily.temperature_2m_max[0]);
+  const tempLowF = cToF(daily.temperature_2m_min[0]);
+
   const weather = {
-    temperature: cToF(current.temperature),
+    temperature: tempF,
     condition: mapWMOToCondition(current.weathercode),
-    tempHigh: cToF(daily.temperature_2m_max[0]),
-    tempLow: cToF(daily.temperature_2m_min[0]),
-    feelsLike: cToF(
-      current.temperature +
-        (windChillAdjustment(current.temperature, current.windspeed) || 0)
-    ),
+    tempHigh: tempHighF,
+    tempLow: tempLowF,
+    feelsLike: tempF + (windChillAdjustment(tempF, current.windspeed) || 0),
     lastUpdated: new Date().toISOString(),
   };
 
