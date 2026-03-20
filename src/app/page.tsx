@@ -114,7 +114,7 @@ export default function HomePage() {
           return null;
         }
 
-        const res = await fetch(endpoint, { next: { revalidate: 0 } });
+        const res = await fetch(endpoint);
         if (!res.ok) return null;
         const data = await res.json();
 
