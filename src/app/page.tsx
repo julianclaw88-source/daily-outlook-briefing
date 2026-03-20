@@ -96,16 +96,17 @@ export default function HomePage() {
       });
 
       // 2. Fetch Finnhub stock/ETF quotes (if API key provided)
+      const idMap: Record<string, string> = {
+        BTC: "bitcoin",
+        TRX: "tron",
+        SOL: "solana",
+      };
+
       const marketPromises: Promise<MarketData | null>[] = SYMBOLS.map(async (symbol) => {
         const isCrypto = ["BTC", "TRX", "SOL"].includes(symbol);
         let endpoint: string;
         if (isCrypto) {
           // CoinGecko for crypto (no API key)
-          const idMap: Record<string, string> = {
-            BTC: "bitcoin",
-            TRX: "tron",
-            SOL: "solana",
-          };
           endpoint = `https://api.coingecko.com/api/v3/simple/price?ids=${idMap[symbol]}&vs_currencies=usd&include_24hr_change=true`;
         } else if (FINNHUB_API_KEY) {
           endpoint = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_API_KEY}`;
