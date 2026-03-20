@@ -7,7 +7,7 @@ type MarketData = {
   price: number;
   change: number;
   changePercent: number;
-  lastUpdated: string;
+  lastUpdated: Date;
   chartData: number[];
 };
 
@@ -17,7 +17,7 @@ type WeatherData = {
   tempHigh: number;
   tempLow: number;
   feelsLike: number;
-  lastUpdated: string;
+  lastUpdated: Date;
 };
 
 export default function HomePage() {
@@ -31,7 +31,6 @@ export default function HomePage() {
   const fetchData = async () => {
     setLoading(true);
     setError(null);
-
     try {
       const res = await fetch("/api/briefing", { next: { revalidate: 0 } });
       if (!res.ok) throw new Error("Failed to fetch briefing data");
