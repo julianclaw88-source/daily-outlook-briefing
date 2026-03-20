@@ -188,23 +188,33 @@ export default function HomePage() {
           </p>
         </header>
 
-        {/* Apple-style Weather Widget - Single horizontal line */}
+        {/* Apple-style Weather Widget - Responsive layout */}
         {weather && (
-          <div className={`bg-gradient-to-r ${getWeatherGradient(weather.condition)} rounded-2xl px-6 py-4 text-white shadow-lg flex items-center gap-6 justify-center`}>
-            <span className="text-4xl">{getWeatherEmoji(weather.condition)}</span>
-            <div className="flex items-baseline gap-1">
-              <span className="text-5xl font-semibold tracking-tight">
-                {weather.temperature}
-              </span>
-              <span className="text-xl font-medium">°F</span>
+          <div className={`bg-gradient-to-r ${getWeatherGradient(weather.condition)} rounded-2xl px-4 py-3 text-white shadow-lg flex flex-col md:flex-row items-center gap-3 md:gap-6`}>
+            {/* Main line: emoji + temp + condition */}
+            <div className="flex items-center gap-3 md:gap-4">
+              <span className="text-4xl">{getWeatherEmoji(weather.condition)}</span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-5xl md:text-7xl font-semibold tracking-tight">
+                  {weather.temperature}
+                </span>
+                <span className="text-xl md:text-2xl font-medium">°F</span>
+              </div>
+              <div className="text-lg md:text-xl font-medium">{weather.condition}</div>
             </div>
-            <div className="text-lg font-medium">{weather.condition}</div>
-            <div className="flex items-center gap-4 text-base">
-              <span className="opacity-90">H:{weather.tempHigh}°</span>
-              <span className="opacity-90">L:{weather.tempLow}°</span>
+
+            {/* Secondary line (full width on mobile, inline on desktop) */}
+            <div className="flex md:hidden w-full justify-center gap-4 text-sm opacity-90">
+              <span>H:{weather.tempHigh}°</span>
+              <span>L:{weather.tempLow}°</span>
+              <span>|</span>
+              <span>Feels like {weather.feelsLike}°F</span>
             </div>
-            <div className="text-sm opacity-80">
-              Feels like {weather.feelsLike}°F
+            <div className="hidden md:flex items-center gap-4 text-base opacity-90">
+              <span>H:{weather.tempHigh}°</span>
+              <span>L:{weather.tempLow}°</span>
+              <span className="opacity-50">|</span>
+              <span>Feels like {weather.feelsLike}°F</span>
             </div>
           </div>
         )}
