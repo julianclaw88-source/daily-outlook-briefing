@@ -34,7 +34,7 @@ export async function GET() {
     lastUpdated: new Date().toISOString(),
   };
 
-  // 2. Fetch market data (quotes + sparkline charts)
+  // 2. Fetch market data (quotes + sparkline charts for crypto only)
   const marketPromises = SYMBOLS.map(async (symbol) => {
     const isCrypto = ["BTC", "TRX", "SOL"].includes(symbol);
     let quoteData: any = null;
@@ -66,7 +66,7 @@ export async function GET() {
           }
         }
       } else {
-        // Finnhub: quote
+        // Finnhub: quote only (no chart due to API limitations)
         const quoteRes = await fetch(
           `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_API_KEY}`
         );
@@ -77,17 +77,6 @@ export async function GET() {
             change: q.c - q.pc,
             changePercent: ((q.c - q.pc) / q.pc) * 100,
           };
-
-          // Chart: hourly candles (24 points)
-          const chartRes = await fetch(
-            `https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=60&count=24&token=${FINNHUB_API_KEY}`
-          );
-          if (chartRes.ok) {
-            const c = await chartRes.json();
-            if (c.s === "ok") {
-              chartData = c.c; // close prices
-            }
-          }
         }
       }
 
@@ -96,7 +85,7 @@ export async function GET() {
       return {
         symbol,
         ...quoteData,
-        chartData,
+        chartData, // empty array for non-crypto
         lastUpdated: new Date().toISOString(),
       };
     } catch (e) {
