@@ -188,32 +188,23 @@ export default function HomePage() {
           </p>
         </header>
 
-        {/* Apple-style Weather Widget */}
+        {/* Apple-style Weather Widget - Single horizontal line */}
         {weather && (
-          <div className={`bg-gradient-to-br ${getWeatherGradient(weather.condition)} rounded-3xl p-6 text-white shadow-lg`}>
-            <div className="flex flex-col items-center text-center space-y-4">
-              <span className="text-6xl">{getWeatherEmoji(weather.condition)}</span>
-              <div className="flex items-baseline gap-2">
-                <span className="text-7xl font-semibold tracking-tight">
-                  {weather.temperature}
-                </span>
-                <span className="text-2xl font-medium">°F</span>
-              </div>
-              <div className="text-xl font-medium">{weather.condition}</div>
-              <div className="flex items-center gap-6 text-lg">
-                <div className="flex flex-col items-center">
-                  <span className="text-sm font-medium opacity-80">H</span>
-                  <span className="text-2xl font-semibold">{weather.tempHigh}°</span>
-                </div>
-                <div className="w-px h-10 bg-white/30" />
-                <div className="flex flex-col items-center">
-                  <span className="text-sm font-medium opacity-80">L</span>
-                  <span className="text-2xl font-semibold">{weather.tempLow}°</span>
-                </div>
-              </div>
-              <div className="text-sm opacity-80">
-                Feels like {weather.feelsLike}°F
-              </div>
+          <div className={`bg-gradient-to-r ${getWeatherGradient(weather.condition)} rounded-2xl px-6 py-4 text-white shadow-lg flex items-center gap-6 justify-center`}>
+            <span className="text-4xl">{getWeatherEmoji(weather.condition)}</span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-5xl font-semibold tracking-tight">
+                {weather.temperature}
+              </span>
+              <span className="text-xl font-medium">°F</span>
+            </div>
+            <div className="text-lg font-medium">{weather.condition}</div>
+            <div className="flex items-center gap-4 text-base">
+              <span className="opacity-90">H:{weather.tempHigh}°</span>
+              <span className="opacity-90">L:{weather.tempLow}°</span>
+            </div>
+            <div className="text-sm opacity-80">
+              Feels like {weather.feelsLike}°F
             </div>
           </div>
         )}
