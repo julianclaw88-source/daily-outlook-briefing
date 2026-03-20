@@ -152,6 +152,29 @@ export default function HomePage() {
     return points;
   };
 
+  // Get weather emoji based on condition
+  const getWeatherEmoji = (condition: string): string => {
+    const lower = condition.toLowerCase();
+    if (lower.includes("clear") || lower.includes("sunny")) return "☀️";
+    if (lower.includes("cloud")) return "☁️";
+    if (lower.includes("rain") || lower.includes("drizzle")) return "🌧️";
+    if (lower.includes("snow")) return "❄️";
+    if (lower.includes("thunderstorm")) return "⛈️";
+    if (lower.includes("fog") || lower.includes("mist")) return "🌫️";
+    return "🌤️";
+  };
+
+  // Choose gradient background based on weather condition
+  const getWeatherGradient = (condition: string): string => {
+    const lower = condition.toLowerCase();
+    if (lower.includes("clear") || lower.includes("sunny")) return "from-blue-400 to-blue-600";
+    if (lower.includes("cloud")) return "from-gray-300 to-gray-500";
+    if (lower.includes("rain") || lower.includes("drizzle")) return "from-gray-500 to-gray-700";
+    if (lower.includes("snow")) return "from-blue-100 to-blue-300";
+    if (lower.includes("thunderstorm")) return "from-purple-500 to-gray-800";
+    return "from-blue-300 to-blue-500";
+  };
+
   return (
     <div className="min-h-screen bg-[#F5F5F7] text-black p-4 md:p-8">
       <div className="max-w-6xl mx-auto space-y-8">
@@ -163,21 +186,37 @@ export default function HomePage() {
           <p className="text-lg text-gray-500">
             {formatDate(lastGlobalUpdate || new Date())}
           </p>
-          {weather && (
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-gray-200 mt-2">
-              <span className="text-2xl">{weather.temperature}°F</span>
-              <span className="text-gray-600">{weather.condition}</span>
-              <span className="text-gray-500">|</span>
-              <span className="text-gray-600">
-                H:{weather.tempHigh}° L:{weather.tempLow}°
-              </span>
-              <span className="text-gray-500">|</span>
-              <span className="text-gray-600">
-                Feels like {weather.feelsLike}°F
-              </span>
-            </div>
-          )}
         </header>
+
+        {/* Apple-style Weather Widget */}
+        {weather && (
+          <div className={`bg-gradient-to-br ${getWeatherGradient(weather.condition)} rounded-3xl p-6 text-white shadow-lg`}>
+            <div className="flex flex-col items-center text-center space-y-4">
+              <span className="text-6xl">{getWeatherEmoji(weather.condition)}</span>
+              <div className="flex items-baseline gap-2">
+                <span className="text-7xl font-semibold tracking-tight">
+                  {weather.temperature}
+                </span>
+                <span className="text-2xl font-medium">°F</span>
+              </div>
+              <div className="text-xl font-medium">{weather.condition}</div>
+              <div className="flex items-center gap-6 text-lg">
+                <div className="flex flex-col items-center">
+                  <span className="text-sm font-medium opacity-80">H</span>
+                  <span className="text-2xl font-semibold">{weather.tempHigh}°</span>
+                </div>
+                <div className="w-px h-10 bg-white/30" />
+                <div className="flex flex-col items-center">
+                  <span className="text-sm font-medium opacity-80">L</span>
+                  <span className="text-2xl font-semibold">{weather.tempLow}°</span>
+                </div>
+              </div>
+              <div className="text-sm opacity-80">
+                Feels like {weather.feelsLike}°F
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Manual Refresh Bar */}
         <div className="flex items-center justify-between bg-white rounded-2xl p-4 shadow-sm border border-gray-200">

@@ -22,12 +22,16 @@ export async function GET() {
   const weatherJson = await weatherRes.json();
   const current = weatherJson.current_weather;
   const daily = weatherJson.daily;
+
+  // Convert Celsius to Fahrenheit
+  const cToF = (c: number) => Math.round((c * 9/5) + 32);
+
   const weather = {
-    temperature: Math.round(current.temperature),
+    temperature: cToF(current.temperature),
     condition: mapWMOToCondition(current.weathercode),
-    tempHigh: Math.round(daily.temperature_2m_max[0]),
-    tempLow: Math.round(daily.temperature_2m_min[0]),
-    feelsLike: Math.round(
+    tempHigh: cToF(daily.temperature_2m_max[0]),
+    tempLow: cToF(daily.temperature_2m_min[0]),
+    feelsLike: cToF(
       current.temperature +
         (windChillAdjustment(current.temperature, current.windspeed) || 0)
     ),
