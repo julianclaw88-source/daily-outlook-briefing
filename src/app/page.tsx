@@ -190,20 +190,20 @@ export default function HomePage() {
 
         {/* Apple-style Weather Widget - Single horizontal line */}
         {weather && (
-          <div className={`bg-gradient-to-r ${getWeatherGradient(weather.condition)} rounded-2xl px-6 py-4 text-white shadow-lg flex items-center gap-6 justify-center`}>
-            <span className="text-4xl">{getWeatherEmoji(weather.condition)}</span>
+          <div className={`bg-gradient-to-r ${getWeatherGradient(weather.condition)} rounded-2xl px-4 md:px-6 py-4 text-white shadow-lg flex items-center gap-3 md:gap-6 justify-center`}>
+            <span className="text-3xl md:text-4xl">{getWeatherEmoji(weather.condition)}</span>
             <div className="flex items-baseline gap-1">
-              <span className="text-5xl font-semibold tracking-tight">
+              <span className="text-4xl md:text-5xl font-semibold tracking-tight">
                 {weather.temperature}
               </span>
-              <span className="text-xl font-medium">°F</span>
+              <span className="text-lg md:text-xl font-medium">°F</span>
             </div>
-            <div className="text-lg font-medium">{weather.condition}</div>
-            <div className="flex items-center gap-4 text-base">
-              <span className="opacity-90">H:{weather.tempHigh}°</span>
-              <span className="opacity-90">L:{weather.tempLow}°</span>
+            <div className="text-base md:text-lg font-medium">{weather.condition}</div>
+            <div className="flex flex-col text-xs md:text-sm leading-tight">
+              <span className="opacity-90">L: {weather.tempLow}°</span>
+              <span className="opacity-90">H: {weather.tempHigh}°</span>
             </div>
-            <div className="text-sm opacity-80">
+            <div className="hidden md:block text-sm opacity-80">
               Feels like {weather.feelsLike}°F
             </div>
           </div>
