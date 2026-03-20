@@ -257,11 +257,7 @@ export default function HomePage() {
                           strokeWidth="1.5"
                         />
                       </svg>
-                    ) : (
-                      <div className="text-xs text-gray-400">
-                        No chart data
-                      </div>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               ))}
